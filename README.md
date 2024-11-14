@@ -12,6 +12,7 @@ without sacrificing compatibility with `IEEE Std 1003.1`.
 
 ## What's done?
  - yes
+ - uname
 
 ## Build instructions
 To build it you need this:

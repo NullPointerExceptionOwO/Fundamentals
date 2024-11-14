@@ -1,0 +1,2 @@
+subdir('uname')
+subdir('yes')

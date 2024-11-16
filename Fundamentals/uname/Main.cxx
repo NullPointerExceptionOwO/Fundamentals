@@ -1,23 +1,23 @@
 /*
  * Copyright (C) 2024  menadione
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 /**
  * \file Fundamentals/uname/Main.cxx
- * \brief Main function for uname command
+ * \brief Show (u)nix (name)
  * \date November 2024
  */
 
@@ -40,26 +40,17 @@
 /**
  * \brief Show usage message and then quit with exit code 1.
  */
-void usage(void)
-{
-    std::cerr << "Usage: " << ProgramName << ' ' << UsageString << '\n';
-    std::exit(EXIT_FAILURE);
-}
+void usage(void);
 
 /**
  * \brief Print given elements and separate them using space.
  * \param[in] element Element to print
  */
-void printElement(const char* element)
-{
-    static bool useSpaces = false;
-    std::cout << (useSpaces ? " " : "") << element;
-    useSpaces = true;
-}
+void printElement(const char*);
 
 int main(int argc, char** argv)
 {
-    struct utsname systemUname;
+    utsname systemUname;
     int flags = 0;
     int option;
     while ((option = getopt(argc, argv, Options)) != -1) {
@@ -113,4 +104,19 @@ int main(int argc, char** argv)
         printElement(systemUname.machine);
     std::cout << '\n';
     return EXIT_SUCCESS;
+}
+
+void usage(void)
+{
+    std::cerr << "Usage: " << ProgramName << ' ' << UsageString << '\n';
+    std::exit(EXIT_FAILURE);
+}
+
+void printElement(const char* element)
+{
+    static bool useSpaces = false;
+    if (useSpaces)
+        std::cout << ' ';
+    std::cout << element;
+    useSpaces = true;
 }

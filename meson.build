@@ -1,4 +1,5 @@
 project('Fundamentals', 'cpp',
+  default_options: ['cpp_std=c++20'],
   license: 'GPLv3',
   license_files: 'LICENSE',
   version: '0.0.0a'

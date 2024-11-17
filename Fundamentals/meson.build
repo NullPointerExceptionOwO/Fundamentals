@@ -1,3 +1,5 @@
 subdir('kill')
 subdir('uname')
 subdir('yes')
+subdir('dirname')
+subdir('basename')

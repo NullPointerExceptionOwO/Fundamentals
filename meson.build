@@ -1,4 +1,4 @@
-project('Fundamentals', 'cpp',
+project('Fundamentals', 'cpp', 'c',
   default_options: ['cpp_std=c++20'],
   license: 'GPLv3',
   license_files: 'LICENSE',

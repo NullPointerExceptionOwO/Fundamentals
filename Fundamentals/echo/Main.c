@@ -16,30 +16,24 @@
  */
 
 /**
- * \file Fundamentals/kill/Main.cxx
- * \brief Kill process.
+ * \file Fundamentals/echo/Main.c
+ * \brief Write arguments to standard output
  * \date November 2024
  */
 
-#include <csignal>
-#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
 
-#define ProgramName "kill"
-#define UsageString "[-l|-s] [-signal_number|-signal_name] pid..."
+/* #define ProgramName "echo" */
 
-/**
- * \brief Show usage message and then quit with exit code 1.
- */
-void usage(void);
-
-int main(void)
+int main(int argc, char** argv)
 {
-    /* TODO */
-    usage();
-}
-
-void usage(void)
-{
-    std::cerr << "Usage: " << ProgramName << ' ' << UsageString << '\n';
-    std::exit(EXIT_FAILURE);
+    ++argv; /* Seek to actual arguments */
+    while (*argv != NULL) {
+        printf("%s", *argv);
+        if (*++argv != NULL)
+            putchar(' ');
+    }
+    putchar('\n');
+    return EXIT_SUCCESS;
 }

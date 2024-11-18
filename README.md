@@ -11,10 +11,11 @@ Fundamentals is a set of core utilities that aims to be as simple as possible
 without sacrificing compatibility with `IEEE Std 1003.1`.
 
 ## What's done?
- - yes
- - uname
- - dirname
  - basename
+ - dirname
+ - echo
+ - uname
+ - yes
 
 ## Build instructions
 To build it you need this:

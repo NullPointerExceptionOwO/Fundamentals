@@ -2,4 +2,6 @@ dirname_sources = files(
   'Main.cxx'
 )
 
-executable('dirname', dirname_sources)
+executable('dirname', dirname_sources,
+  install: true
+)

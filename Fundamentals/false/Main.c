@@ -16,25 +16,15 @@
  */
 
 /**
- * \file Fundamentals/echo/Main.c
- * \brief Write arguments to standard output
+ * \file Fundamentals/false/Main.c
+ * \brief Do nothing, unsuccessfully
  * \date November 2024
  */
 
-#include <stdio.h>
 #include <stdlib.h>
 
-/* #define ProgramName "echo" */
+/* #define ProgramName "false" */
 
-int main(int argc, char** argv)
-{
-    (void)(argc); /* Suppress -Wunused-parameter */
-    ++argv; /* Seek to actual arguments */
-    while (*argv != NULL) {
-        printf("%s", *argv);
-        if (*++argv != NULL)
-            putchar(' ');
-    }
-    putchar('\n');
-    return EXIT_SUCCESS;
+int main(void) {
+    return EXIT_FAILURE; 
 }

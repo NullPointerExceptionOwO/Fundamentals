@@ -25,6 +25,4 @@
 
 /* #define ProgramName "false" */
 
-int main(void) {
-    return EXIT_FAILURE; 
-}
+int main(void) { return EXIT_FAILURE; }

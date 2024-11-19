@@ -39,7 +39,8 @@ int main(int argc, char** argv)
         usage();
     std::string_view baseName = basename(argv[1]);
     const std::string suffix = argc == 3 ? argv[2] : "";
-    if (!suffix.empty() && baseName.length() > suffix.length() && baseName.ends_with(suffix))
+    if (!suffix.empty() && baseName.length() > suffix.length()
+        && baseName.ends_with(suffix))
         baseName.remove_suffix(suffix.length());
     std::cout << baseName << '\n';
     return EXIT_SUCCESS;

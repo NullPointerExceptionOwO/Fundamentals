@@ -21,16 +21,13 @@
  * \date November 2024
  */
 
-/* TODO: Rewrite in C */
-
+#include <cerrno>
 #include <cstdio>
 #include <filesystem>
 #include <iostream>
 #include <unistd.h>
-#include <vector>
 
 #define ProgramName "mv"
-/* #define UsageString "" */
 #define Options "if"
 
 namespace fs = std::filesystem;
@@ -39,6 +36,11 @@ namespace fs = std::filesystem;
  * \brief Show usage message and then quit with exit code 1.
  */
 void usage(void);
+
+/**
+ * \brief Copy files in case of EXDEV errno
+ */
+void tryToMoveByCopying(const fs::path, const fs::path);
 
 int main(int argc, char** argv)
 {
@@ -67,7 +69,6 @@ int main(int argc, char** argv)
     }
     /* Last one is target directory/file */
     const fs::path target(fs::weakly_canonical(argvFilesOnly[filesCount - 1]));
-    const bool isTargetADir = fs::is_directory(target);
     for (int argvIndex = 0; argvIndex < filesCount - 1; ++argvIndex) {
         const fs::path toMove(argvFilesOnly[argvIndex]);
         if (!fs::exists(toMove)) {
@@ -78,13 +79,32 @@ int main(int argc, char** argv)
         /* FIXME: Implement -i argument */
         if (confirm) { }
         try {
-            fs::rename(toMove, isTargetADir ? target / toMove.filename() : target);
+            fs::rename(toMove,
+                fs::is_directory(target) ? target / toMove.filename() : target);
         } catch (const fs::filesystem_error& e) {
-            std::cerr << "Failed to move " << toMove << " to " << target << " ("
-                      << e.what() << ")\n";
+            if (e.code().value() == EXDEV)
+                tryToMoveByCopying(toMove, target);
+            else
+                std::cerr << "Failed to move " << toMove << " to " << target << " ("
+                          << e.what() << ")\n";
         }
     }
     return EXIT_SUCCESS;
+}
+
+void tryToMoveByCopying(const fs::path from, const fs::path to)
+{
+    try {
+        fs::copy(from, fs::is_directory(to) ? to / from.filename() : to);
+    } catch (const fs::filesystem_error& e) {
+        std::cerr << "Failed to copy " << from << " to " << to << '\n';
+        return;
+    }
+    try {
+        fs::remove_all(from);
+    } catch (const fs::filesystem_error& e) {
+        std::cerr << "Failed to remove old " << from << '\n';
+    }
 }
 
 void usage(void)
